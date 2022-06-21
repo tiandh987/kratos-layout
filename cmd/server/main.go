@@ -27,6 +27,7 @@ var (
 )
 
 func init() {
+	// 配置文件
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
@@ -55,8 +56,11 @@ func main() {
 		"trace.id", tracing.TraceID(),
 		"span.id", tracing.SpanID(),
 	)
+
 	c := config.New(
+		// 设置配置源
 		config.WithSource(
+			// 使用本地文件
 			file.NewSource(flagconf),
 		),
 	)
@@ -67,6 +71,7 @@ func main() {
 	}
 
 	var bc conf.Bootstrap
+	// 读取配置文件的内容到结构体中
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
